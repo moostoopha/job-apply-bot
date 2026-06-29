@@ -27,8 +27,8 @@ def run_setup():
     config = {}
 
     config["profile"] = {
-        "name":     input("Your full name [Mustafa Hassan]: ").strip() or "Mustafa Hassan",
-        "email":    input("Email [mustufahasan588@gmail.com]: ").strip() or "mustufahasan588@gmail.com",
+        "name":     input("Your full name: ").strip(),
+        "email":    input("Email: ").strip(),
         "phone":    input("Phone number (optional): ").strip(),
         "cv_path":  input("CV path [~/Documents/my_updated_resume/Mustafa_Hassan_CV_EN.docx]: ").strip()
                     or "~/Documents/my_updated_resume/Mustafa_Hassan_CV_EN.docx",

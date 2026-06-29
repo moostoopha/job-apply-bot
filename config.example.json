@@ -1,0 +1,29 @@
+{
+  "profile": {
+    "name": "Your Name",
+    "email": "your@email.com",
+    "phone": "+49123456789",
+    "cv_path": "~/Documents/your_cv.pdf"
+  },
+  "search": {
+    "keywords": [
+      "DevOps Engineer",
+      "Platform Engineer",
+      "Site Reliability Engineer",
+      "Senior Data Engineer",
+      "System Engineer",
+      "Linux Engineer",
+      "Infrastructure Engineer"
+    ],
+    "locations": ["Germany", "Europe"],
+    "remote": true
+  },
+  "platforms": {
+    "linkedin": true,
+    "stepstone": true
+  },
+  "limits": {
+    "max_per_run": 100,
+    "max_per_day": 200
+  }
+}

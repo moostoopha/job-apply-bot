@@ -1,0 +1,17 @@
+# Credentials & sessions — NEVER commit these
+sessions/
+.linkedin_creds
+*.json.bak
+config.json
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store

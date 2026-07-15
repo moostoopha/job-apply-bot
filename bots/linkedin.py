@@ -151,6 +151,10 @@ class LinkedInBot(BaseBot):
             self.log_result(job_id, title, company, url, "skipped", "no apply button")
             return "skipped"
 
+        if not apply_btn.is_enabled():
+            self.log_result(job_id, title, company, url, "skipped", "button disabled")
+            return "skipped"
+
         btn_text = apply_btn.inner_text().strip()
 
         if "Easy Apply" in btn_text:

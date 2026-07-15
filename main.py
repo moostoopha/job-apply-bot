@@ -2,7 +2,7 @@
 """
 Job Application Bot
 Usage:
-  python3 main.py                    # run all enabled platforms
+  python3 main.py                    # run all enabled platforms (async multi-tab)
   python3 main.py --platform linkedin
   python3 main.py --platform stepstone
   python3 main.py --setup            # re-run setup wizard
@@ -10,11 +10,12 @@ Usage:
 """
 
 import argparse
+import asyncio
 import json
 import sys
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 
 CONFIG_FILE = Path(__file__).parent / "config.json"
 LOG_FILE    = Path(__file__).parent / "logs" / "applications.csv"
@@ -128,19 +129,21 @@ def main():
     print(f"[bot] Locations: {', '.join(locations)}")
     print(f"[bot] Limits   : {config['limits']['max_per_run']} per run / {config['limits']['max_per_day']} per day\n")
 
-    total_applied = 0
+    async def _run_async():
+        total = 0
+        async with async_playwright() as pw:
+            if "linkedin" in platforms_to_run:
+                from bots.async_linkedin import AsyncLinkedInBot
+                bot = AsyncLinkedInBot(config, pw, headless=headless)
+                total += await bot.run()
 
-    with sync_playwright() as pw:
-        if "linkedin" in platforms_to_run:
-            from bots.linkedin import LinkedInBot
-            bot = LinkedInBot(config, pw, headless=headless)
-            total_applied += bot.run()
+            if "stepstone" in platforms_to_run:
+                from bots.async_stepstone import AsyncStepStoneBot
+                bot = AsyncStepStoneBot(config, pw, headless=headless)
+                total += await bot.run()
+        return total
 
-        if "stepstone" in platforms_to_run:
-            from bots.stepstone import StepStoneBot
-            bot = StepStoneBot(config, pw, headless=headless)
-            total_applied += bot.run()
-
+    total_applied = asyncio.run(_run_async())
     print(f"\n[done] Total applied this run: {total_applied}")
     show_stats()
 

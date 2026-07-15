@@ -64,6 +64,7 @@ class BaseBot:
         """Open a visible browser so user can log in manually."""
         vis_browser = self.playwright.chromium.launch(
             headless=False,
+            channel="chrome",
             args=["--no-sandbox", "--disable-dev-shm-usage"],
         )
         vis_ctx = vis_browser.new_context(viewport={"width": 1280, "height": 800})
